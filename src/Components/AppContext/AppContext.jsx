@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth";
 import { auth, db, onAuthStateChanged } from "../firebase/firebase";
 import { query, where, collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
@@ -74,30 +74,32 @@ const AppContext = ({ children }) => {
     await signOut(auth);
   };
 
-  const userStateChanged = async () => {
-    onAuthStateChanged(auth, async (user) => {
+  const userStateChanged = useCallback(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const q = query(collectionUsersRef, where("uid", "==", user?.uid));
-        await onSnapshot(q, (doc) => {
-          setUserData(doc?.docs[0]?.data());
+        const q = query(collectionUsersRef, where("uid", "==", user.uid));
+        onSnapshot(q, (snapshot) => {
+          if (!snapshot.empty) {
+            setUserData(snapshot.docs[0].data());
+          }
         });
         setUser(user);
+        navigate("/");
       } else {
         setUser(null);
+        setUserData(null);
         navigate("/login");
       }
     });
-  };
-
+  
+    return unsubscribe;
+  }, [navigate, collectionUsersRef]);
+  
   useEffect(() => {
-    userStateChanged();
-    if (user || userData) {
-      navigate("/");
-    } else {
-      navigate("/login");
-    }
-    return () => userStateChanged();
-  }, []);
+    const unsubscribe = userStateChanged();
+    return () => unsubscribe();
+  }, [userStateChanged]);
+  
 
   const initialState = {
     signInWithGoogle: signInWithGoogle,
