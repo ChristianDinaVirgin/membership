@@ -93,7 +93,7 @@ const Login = () => {
                   </form>
                 </CardBody>
                 <CardFooter className="pt-0">
-                  <Link to="/login">
+                  <Link to="/">
                     <p className="ml-1 font-bold font-roboto text-sm text-black text-center">
                       Back to Login
                     </p>

@@ -1,35 +1,23 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardBody, CardFooter, Typography } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { HashLoader } from 'react-spinners';
-import { AuthContext } from "../AppContext/AppContext";
-import { auth, onAuthStateChanged } from "../firebase/firebase";
+import { PuffLoader } from 'react-spinners';
 import logoLogin from "../../assets/images/logoLogin.png";
 import logo from "../../assets/images/logo.png";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
-  const { registerWithEmailAndPassword } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/");
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    });
+    setLoading(false); // No authentication check needed
   }, [navigate]);
 
   const initialValues = {
-    name: "",
     email: "",
     password: "",
   };
@@ -52,10 +40,13 @@ const Register = () => {
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
       try {
-        await registerWithEmailAndPassword(values.name, values.email, values.password);
+        // Simulating a login function; replace with actual logic as needed
+        console.log("Login attempted with:", values);
+        setLoading(false);
+        navigate(""); // Redirect after successful login
       } catch (error) {
-        console.error("Registration error:", error);
-        alert("Registration failed. Please check your details.");
+        console.error("Login error:", error);
+        alert("Login failed. Please check your email and password.");
         setLoading(false);
         setSubmitting(false);
       }
@@ -65,23 +56,27 @@ const Register = () => {
   return (
     <>
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
-          <HashLoader color="#d12026" size={100} speedMultiplier={1} />
+        <div className="flex justify-center items-center min-h-screen">
+          <PuffLoader color="#36454F" size={100} speedMultiplier={1} />
         </div>
       ) : (
-        <div className="flex h-screen justify-center items-center bg-bgLogin">
-          <div className="flex justify-between w-full max-w-6xl">
-            <div className="flex items-center justify-center w-1/2">
-              <img src={logoLogin} alt="Logo" className="h-30" />
+        <div className="flex min-h-screen justify-center items-center bg-bgLogin p-4">
+          <div className="flex flex-col md:flex-row justify-between w-full max-w-6xl">
+          <div className="flex items-center justify-center w-full md:w-1/2 mb-8 md:mb-0">
+              <img 
+                src={logoLogin} 
+                alt="Logo" 
+                className="h-40 md:h-30 lg:h-48" 
+              />
             </div>
-            <div className="flex items-center justify-center w-1/2">
-              <Card className="w-96 shadow-2xl">
+            <div className="flex items-center justify-center w-full md:w-1/2">
+              <Card className="w-full max-w-md shadow-2xl">
                 <CardBody className="flex flex-col gap-4">
                   <div className="flex items-center justify-between mb-1">
-                    <Typography variant="h4" className="font-bold text-black">
+                    <Typography variant="h4" className="font-bold text-black text-lg sm:text-xl md:text-2xl">
                       ITS Membership <br /> System
                     </Typography>
-                    <img src={logo} alt="Logo" className="h-12 mr-4"/>
+                    <img src={logo} alt="Logo" className="h-10 md:h-12 mr-4" />
                   </div>
                   <form onSubmit={formik.handleSubmit}>
                     <div className="mb-2">
@@ -104,7 +99,7 @@ const Register = () => {
                       <Input
                         name="email"
                         type="email"
-                        label="Email"
+                        label="HCDC Email"
                         size="lg"
                         {...formik.getFieldProps("email")}
                       />
@@ -135,7 +130,7 @@ const Register = () => {
                     <Button
                       fullWidth
                       type="submit"
-                      className="bg-baseColor mt-4"
+                      className="mt-4 bg-baseColor mb-0 text-base normal-case"
                       disabled={formik.isSubmitting}
                     >
                       Register
@@ -143,10 +138,10 @@ const Register = () => {
                   </form>
                 </CardBody>
                 <CardFooter className="pt-0">
-                  <div className="mt-1 flex font-roboto text-base justify-center">
+                  <div className="mt-0 flex items-center font-roboto text-base justify-center">
                     Already have an account?
-                    <Link to="/login">
-                      <p className="ml-1 font-bold font-roboto text-baseColor text-btn text-center">
+                    <Link to="/">
+                      <p className="ml-1 font-bold font-roboto text-sm text-baseColor text-center">
                         Login
                       </p>
                     </Link>
