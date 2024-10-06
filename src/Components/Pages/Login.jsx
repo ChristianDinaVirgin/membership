@@ -34,6 +34,10 @@ const Login = () => {
     navigate("/register");
   };
 
+  const AdminIndex = () => {
+    navigate("/admin_index");
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -126,6 +130,7 @@ const Login = () => {
                       </div>
                     </div>
                     <Button
+                      onClick={AdminIndex}
                       fullWidth
                       className="bg-baseColor mb-2 text-base normal-case"
                       type="submit"
