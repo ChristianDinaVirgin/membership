@@ -9,3 +9,7 @@ step 2:
 npm run start
 ```
 # October 6, 2024
+
+
+
+Gi usab na nako ang login ug register pero wala pay @hcdc.edu.ph sa required

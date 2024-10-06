@@ -30,6 +30,10 @@ const Login = () => {
       .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/, "Password must contain letters and at least one number"),
   });
 
+  const signUp = () => {
+    navigate("/register");
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -116,25 +120,21 @@ const Login = () => {
                       Log In
                     </Button>
                     <Button
+                      onClick={signUp}
                       fullWidth
                       className="bg-baseColor mb-0 text-base normal-case"
                       type="submit"
                     >
-                      Login with Google Account
+                      Sign Up
                     </Button>
                   </form>
                 </CardBody>
                 <CardFooter className="pt-0">
-                  {/* <Link to="/reset">
-                    <p className="ml-1 font-bold font-roboto text-sm text-baseColor text-center">
-                      Reset the password
-                    </p>
-                  </Link> */}
                   <div className="mt-0 flex items-center font-roboto text-base justify-center">
-                    Nakalimtan ang password?
-                    <Link to="/ResetPass">
+                    Forgot password?
+                    <Link to="/resetpass">
                       <p className="ml-1 font-bold font-roboto text-sm text-baseColor text-center">
-                        Ataya, pinduta ni para ma reset
+                        Click here
                       </p>
                     </Link>
                   </div>
