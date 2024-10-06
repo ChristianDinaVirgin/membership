@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { PuffLoader } from 'react-spinners';
+import { useNavigate } from "react-router-dom";
 import hcdclogo from "../../../assets/images/hcdc2.png";
 
 const Dashboard = () => {
-  const [isSidebarOpen, setSidebarOpen, loading] = useState(true);
+  const [isSidebarOpen, setSidebarOpen, loading] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
+  };
+
+  const Logout = () => {
+    navigate("/");
   };
 
   return (
@@ -24,7 +30,7 @@ const Dashboard = () => {
             <p className="text-gray-400 mb-0">59826920</p>
             <p className="text-gray-400">Admin</p>
             <nav className="mt-8">
-                <button className="bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 w-full mb-2 text-left">
+                <button className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 w-full mb-2 text-left">
                     Attendance
                 </button>
                 <button className="bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded w-full mb-2 text-left">
@@ -33,7 +39,7 @@ const Dashboard = () => {
                 <button className="bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded w-full mb-2 text-left">
                     Membership Fee
                 </button>
-                <button className="bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded w-full text-left">
+                <button onClick={Logout} className="bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded w-full text-left">
                     Logout
                 </button>
             </nav>
@@ -44,17 +50,19 @@ const Dashboard = () => {
         <main className="flex-1 p-6">
             {/* Header */}
             <div className="bg-red-600 text-white flex items-center justify-between p-4">
-            <button onClick={toggleSidebar} className="text-white focus:outline-none">
-                <div className="flex flex-col">
-                <span className="h-1 w-6 bg-white mb-1"></span>
-                <span className="h-1 w-6 bg-white mb-1"></span>
-                <span className="h-1 w-6 bg-white"></span>
+                <div className="flex items-center">
+                    <button onClick={toggleSidebar} className="text-white focus:outline-none mr-2 flex items-center">
+                    <div className="flex flex-col">
+                        <span className="h-1 w-6 bg-white mb-1"></span>
+                        <span className="h-1 w-6 bg-white mb-1"></span>
+                        <span className="h-1 w-6 bg-white"></span>
+                    </div>
+                    </button>
+                    <h2 className="text-white font-semibold text-2xl ml-5">Attendance</h2> {/* Change to Dashboard */}
                 </div>
-            </button>
-            <div className="flex items-center">
-                {/* <h2 className="text-lg font-semibold mr-2">ITS Membership Fee System</h2> */}
-                <img src={hcdclogo} alt="Logo" className="h-8 mr-2" />
-            </div>
+                <div className="flex items-center">
+                    <img src={hcdclogo} alt="Logo" className="h-8 mr-2" />
+                </div>
             </div>
 
             {/* Statistic Cards */}
