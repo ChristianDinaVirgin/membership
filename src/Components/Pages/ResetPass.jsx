@@ -7,7 +7,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { PuffLoader } from 'react-spinners';
 import logoLogin from "../../assets/images/logoLogin.png";
-import logo from "../../assets/images/logo.png";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -69,75 +68,36 @@ const Login = () => {
               <Card className="w-full max-w-md shadow-2xl">
                 <CardBody className="flex flex-col gap-4">
                   <div className="flex items-center justify-between mb-1">
-                    <Typography variant="h4" className="font-bold text-black text-lg sm:text-xl md:text-2xl">
-                      ITS Membership <br /> System
+                    <Typography variant="h3" className="font-bold text-black text-base">
+                    Enter the email address associated with your account and we 'll send you a link to reset your password.
                     </Typography>
-                    <img src={logo} alt="Logo" className="h-10 md:h-12 mr-4" />
                   </div>
                   <form onSubmit={formik.handleSubmit}>
                     <div className="mb-2">
                       <Input
                         name="email"
                         type="email"
-                        label="Email"
+                        label="Enter Email"
                         size="lg"
                         {...formik.getFieldProps("email")}
                       />
                     </div>
-                    <div>
-                      {formik.touched.email && formik.errors.email && (
-                        <Typography variant="small" color="red">
-                          {formik.errors.email}
-                        </Typography>
-                      )}
-                    </div>
-                    <div className="mt-4 mb-2 pb-2">
-                      <Input
-                        name="password"
-                        type="password"
-                        label="Password"
-                        size="lg"
-                        {...formik.getFieldProps("password")}
-                      />
-                      <div>
-                        {formik.touched.password && formik.errors.password && (
-                          <Typography variant="small" color="red">
-                            {formik.errors.password}
-                          </Typography>
-                        )}
-                      </div>
-                    </div>
                     <Button
                       fullWidth
-                      className="bg-baseColor mb-2 text-base normal-case"
+                      className="bg-baseColor mb-0 mt-5 text-base normal-case"
                       type="submit"
                       disabled={formik.isSubmitting}
                     >
-                      Log In
-                    </Button>
-                    <Button
-                      fullWidth
-                      className="bg-baseColor mb-0 text-base normal-case"
-                      type="submit"
-                    >
-                      Login with Google Account
+                      Continue
                     </Button>
                   </form>
                 </CardBody>
                 <CardFooter className="pt-0">
-                  {/* <Link to="/reset">
-                    <p className="ml-1 font-bold font-roboto text-sm text-baseColor text-center">
-                      Reset the password
+                  <Link to="/login">
+                    <p className="ml-1 font-bold font-roboto text-sm text-black text-center">
+                      Back to Login
                     </p>
-                  </Link> */}
-                  <div className="mt-0 flex items-center font-roboto text-base justify-center">
-                    Nakalimtan ang password?
-                    <Link to="/ResetPass">
-                      <p className="ml-1 font-bold font-roboto text-sm text-baseColor text-center">
-                        Ataya, pinduta ni para ma reset
-                      </p>
-                    </Link>
-                  </div>
+                  </Link>
                 </CardFooter>
               </Card>
             </div>
