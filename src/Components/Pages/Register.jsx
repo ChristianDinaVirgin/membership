@@ -66,7 +66,6 @@ const Register = () => {
     },
   });
   
-
   return (
     <>
       {loading ? (
