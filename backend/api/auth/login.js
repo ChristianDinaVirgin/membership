@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const { sql } = require('@vercel/postgres');
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://its-membership.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', 'https://its-membership.vercel.app'); // front end
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 

@@ -40,18 +40,32 @@ const Register = () => {
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
       try {
-        // Simulating a login function; replace with actual logic as needed
-        console.log("Login attempted with:", values);
-        setLoading(false);
-        navigate(""); // Redirect after successful login
+        const response = await fetch('https://its-membership-server.vercel.app', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+  
+        if (response.ok) {
+          console.log("Registration successful:", await response.json());
+          navigate("/");
+        } else {
+          const errorData = await response.json();
+          console.error("Registration failed:", errorData);
+          alert(errorData.message || "Registration failed");
+        }
       } catch (error) {
-        console.error("Login error:", error);
-        alert("Login failed. Please check your email and password.");
+        console.error("Error during registration:", error);
+        alert("Registration failed. Please try again later.");
+      } finally {
         setLoading(false);
         setSubmitting(false);
       }
     },
   });
+  
 
   return (
     <>

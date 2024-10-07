@@ -44,7 +44,7 @@ const Login = () => {
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
       try { 
-        const response = await fetch("http://its-membership-server.vercel.app/api/auth/login", {
+        const response = await fetch("https://its-membership-server.vercel.app/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
