@@ -13,14 +13,14 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(false); // No authentication check needed
-  }, [navigate]);
-
   const initialValues = {
     email: "",
     password: "",
   };
+
+  useEffect(() => {
+    setLoading(false);
+  }, [navigate]);
 
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email address").required("Required"),
@@ -43,14 +43,28 @@ const Login = () => {
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
-      try {
-        // Simulating a login function; replace with actual logic as needed
-        console.log("Login attempted with:", values);
-        setLoading(false);
-        navigate(""); // Redirect after successful login
+      try { 
+        const response = await fetch("https://its-membership-server.vercel.app/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Login failed. Please check your email and password.");
+        }
+
+        const data = await response.json();
+        console.log("Login successful:", data);
+
+        navigate("/home");
       } catch (error) {
         console.error("Login error:", error);
-        alert("Login failed. Please check your email and password.");
+        alert(error.message);
+      } finally {
         setLoading(false);
         setSubmitting(false);
       }

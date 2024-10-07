@@ -1,0 +1,13 @@
+Ang duha ka test js is not official na 
+direct-functions but possibly magamit 
+sa following nga functions:
+
+update:
+- change user info
+- change password
+- renaming
+- etc
+
+delete:
+- removing table rows
+- account deletion
